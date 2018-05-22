@@ -1,30 +1,16 @@
 # html-hax
 This will be a web-based game where players learn about HTML by "hacking" web pages to solve puzzles.
 
-Right now, this is just a minimal "Hello World" [App Engine](https://cloud.google.com/appengine/) app, using the [Flask](http://flask.pocoo.org/) library.
+Right now, this is just a small demo [App Engine](https://cloud.google.com/appengine/) app, using the [Flask](http://flask.pocoo.org/) library.
 
-## App Structure
-The two most important files are:
+## Changes since release 0.1
 
-### app.yaml
-This is where App Engine always starts. This file defines where each request should be routed.
+### User Profile
+The new file `user.py` defines a database format for storing app-specific information about our users.
+In this example, we store the user's email (as defined by their Google login), and also a list of pages they've visited on our app.
 
-In this version, all requests are routed to be handled by `main.py`. This version's handler also specifies that the user must log in before they are actually routed to the `main.py` script.
+The `get_by_user()` function in `user.py` retrieves the database entry for a give user, or creates a (blank) database entry if one doesn't already exist for this user.
 
-### main.py
-This is a python script where we define how to handle certain requests. Right now, it only knows to handle the '/' request (which is just the main web page). It handles it by saying 'Hello, world.'
+We actually add data about the user in `main.py`, where we use the `before_request` handler to log what URL was requested before actually handling each request.
 
-### Other files
-#### .gitattributes and .gitignore
-These are files that Git (the version control system) uses to decide how and what to add - or not add - to the repository when changes are made.
-
-#### appengine_config.py
-This is a standard (but optional) file for App Engine applications. In our case, we are only using it to put in a workaround to a bug that happens on Windows.
-
-#### LICENSE
-This is just a text file with the license for the code (this code is distributed under a permissive [MIT license](https://en.wikipedia.org/wiki/MIT_License)).
-
- You can actually use the GitHub interface to pick a license, and this fill will be automatically generated.
-
-#### README.md
-That's this file! It's a [Markdown](https://www.markdownguide.org/) file that GitHub automatically displays on the project's code page.
+You can see the additional code for all of this in this commit: https://github.com/yanamal/html-hax-clean/commit/dfaa5cfb72ecb27dce4ec5383339b916b818f801
