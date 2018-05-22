@@ -3,7 +3,7 @@
 # import libraries:
 import os
 from google.appengine.api import users
-from flask import Flask,request
+from flask import Flask,request,render_template
 
 # Import code from our own files:
 from user import UserProfile
@@ -17,7 +17,7 @@ if not os.getenv('SERVER_SOFTWARE').startswith('Google App Engine/'):
 
 @app.route('/')
 def hello():
-    return 'Hello World!'
+    return render_template('hello.html', name=users.get_current_user().nickname())
 
 # this special handler function will run for each request, regardless of the specific route, before the actual route handler
 # in this example, we log each request in the user's profile, so that we have a histor of pages visited.
