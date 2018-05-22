@@ -1,0 +1,5 @@
+# Auto detect text files and perform LF normalization
+# this basically means that text files made on all types of systems will be
+# standardized to use just one kind of end-of-line formatting.
+
+* text=auto

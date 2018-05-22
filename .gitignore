@@ -1,0 +1,9 @@
+# Google App Engine generated folder
+appengine-generated/
+
+# all compiled python files (extension pyc)
+*.pyc
+
+# non-useful files that Mac OS generates when you make changes to directories
+*/.DS_Store
+.DS_Store
