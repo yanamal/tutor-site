@@ -6,5 +6,9 @@
   <body>
     <h1>Hello, <em>{{ name }}</em>!</h1>
     This page gets rendered by the server, so it knows that you are {{ name }}!
+
+    {% if profile and profile.is_teacher() %}
+      <br>This should only be visible if you are a teacher!
+    {% endif %}
   </body>
 </html>

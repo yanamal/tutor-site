@@ -5,22 +5,34 @@ from flask import Flask
 
 app = Flask(__name__)
 
+# class represeting a timestamp/action pair for logging navigation.
+# Action is a string (for now): most commonly the path that the user navigated to.
+class TimestampedAction(ndb.Model):
+    timestamp = ndb.DateTimeProperty(auto_now_add=True) # timestamp. auto_now_add makes it so that the timestamp is automatically added when an instance is created.
+    action = ndb.StringProperty() # the action taken
+
 # class representing User Profile data that's specific to this application:
 class UserProfile(ndb.Model):
-  user_email = ndb.StringProperty() # record the user's email, as specified by their Google log in.
-  visited_pages = ndb.StringProperty(repeated=True)  # in this example, we track a list of the pages this user has visited
+    user_email = ndb.StringProperty() # record the user's email, as specified by their Google log in. Just for simpler browsing.
+    action_log = ndb.StructuredProperty(TimestampedAction, repeated=True)
+    role = ndb.StringProperty() # user's role: student, TA, etc. TODO: maybe should be enum/int?
 
-  # retrieve (or automatically create) user profile for the given App Engine user object.
-  @classmethod
-  def get_by_user(cls, user):
-    # cls is just a reference to the UserProfile class
-    profile = cls.get_by_id(user.user_id())
-    # automatically create blank profile if user doesn't already exist
-    if not profile:
-        profile = UserProfile(user_email = user.email(),
-                              visited_pages=[], id=user.user_id() )
-        # The special 'id' parameter sets the unique key for that entry in the NDB database.
-        # We want one entry per user, so we use the user id as the unique key.
-        # This is also why get_by_id above works: we know that the NDB id and the AppEngine User id are the same.
-        profile.put()
-    return profile
+    # retrieve (or automatically create) user profile for the given App Engine user object.
+    @classmethod
+    def get_by_user(cls, user):
+        profile = cls.get_by_id(user.user_id())
+        # automatically create blank profile if user doesn't already exist
+        if not profile:
+            # TODO: use a whitelist of site-specific 'admin' users to automatically set role to 'admin' if email matches.
+            profile = UserProfile(user_email = user.email(),
+                                  action_log=[], role='student', id=user.user_id() )
+            profile.put()
+        return profile
+
+    def log_action(self, action):
+        self.action_log.append(TimestampedAction(action=action))
+        self.put()
+
+    def is_teacher(self):
+        # TODO: probably better is_teacher logic.
+        return not (self.role == 'student')
