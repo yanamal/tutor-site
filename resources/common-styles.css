@@ -1,0 +1,6 @@
+
+table.rubric, table.rubric td, table.rubric th {
+  background-color: lightgray;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
