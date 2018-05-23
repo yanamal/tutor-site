@@ -6,6 +6,9 @@ threadsafe: yes
 
 # Each handler redirects a set of URLs to be handled by a specific file or a script:
 handlers:
+- url: /resources
+  static_dir: resources
+
 - url: .* # this will redirect all URLs not handled by anything else above it.
   script: main.app # this will use the script in main.py
   login: required # before redirecting, this handler will make sure the user is logged in.

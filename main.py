@@ -19,6 +19,11 @@ if not os.getenv('SERVER_SOFTWARE').startswith('Google App Engine/'):
 def hello():
     return render_template('hello.html', name = users.get_current_user().nickname(), profile=UserProfile.get_by_user(users.get_current_user()))
 
+# render a site-specific page from template
+@app.route('/site-specific/<page>')
+def renderPage(page):
+    return render_template('site-specific/'+page, profile=UserProfile.get_by_user(users.get_current_user()))
+
 # this special handler function will run for each request, regardless of the specific route, before the actual route handler
 # in this example, we log each request in the user's profile, so that we have a histor of pages visited.
 @app.before_request

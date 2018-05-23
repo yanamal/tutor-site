@@ -7,3 +7,7 @@ appengine-generated/
 # non-useful files that Mac OS generates when you make changes to directories
 */.DS_Store
 .DS_Store
+
+# folders with site-specific content:
+templates/site-specific/
+resources/site-specific/
