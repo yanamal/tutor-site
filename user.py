@@ -10,6 +10,7 @@ class TimestampedAction(ndb.Model):
     timestamp = ndb.DateTimeProperty(auto_now_add=True) # timestamp. auto_now_add makes it so that the timestamp is automatically added when an instance is created.
     url = ndb.StringProperty() # the path/url associated with the action
     action = ndb.StringProperty() # the action taken (load, exit, focus, unfocus, click on button, ...)
+    data = ndb.StringProperty() # additional data (e.g. which button was pressed)
 
 # class representing User Profile data that's specific to this application:
 class UserProfile(ndb.Model):
@@ -29,8 +30,8 @@ class UserProfile(ndb.Model):
             profile.put()
         return profile
 
-    def log_action(self, url, action):
-        self.action_log.append(TimestampedAction(url=url, action=action))
+    def log_action(self, url, action, data=None):
+        self.action_log.append(TimestampedAction(url=url, action=action, data=data))
         self.put()
 
     def is_teacher(self):

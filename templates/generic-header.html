@@ -13,9 +13,27 @@ If your content page inherits from it, you can use various classes in HTML to de
     <!-- tutor-site specific functionality/handlers -->
     <script>
       $( function() {
+        // Accordion objects - expandable sections
         $( ".accordion" ).accordion({
           collapsible: true,
-          active: false
+          active: false,
+          activate: function(event, ui) {
+            if(ui.newPanel.length>0){
+              // expanded some panel
+              data = ui.newPanel[0].id ? (ui.newPanel[0].id + " in ") : ""
+              data += event.target.id
+              $.post("/logevent", { "path": window.location.pathname,
+                                    "action": "expand accordion",
+                                    "data": data})
+              console.log(ui.newPanel[0].id);
+            }
+            else {
+              // no newPanel - collapsed panel(s)
+              $.post("/logevent", { "path": window.location.pathname,
+                                    "action": "collapse accordion",
+                                    "data": event.target.id})
+            }
+          }
         });
       } );
     </script>

@@ -6,12 +6,16 @@
   <p>This is an example page which shows off most of the implemented functionality.</p>
 
   <!-- The accordion class is actually just set up to be a jquery accordion widget (https://jqueryui.com/accordion/)
-  with some useful defaults. (TODO: and also logging when it's interacted with) -->
-  <span class="accordion">
+  with some useful defaults, plus automated logging requests to the server when a user interacts with them.
+  The ids are optional, but they show up in the logging to differentiate which piece was interacted with.
+  The individual sections (like "whichSection") actually get default IDs assigned by jquery, so not strictly necessary even for logging.-->
+  <span class="accordion" id="whichAccordion">
     <span>Expandable info!</span>
-    <div>
+    <div id="whichSection">
       This is the content of the expandable accordion
     </div>
+    <!-- Technically, you can add more accordion panels here by using more pairs of header/content elements.
+    But note that in each accordion, at most one panel is open at a time.-->
   </span>
 
   <!-- Note that the teacher-note styling and the teacher-only functionality are separate:
