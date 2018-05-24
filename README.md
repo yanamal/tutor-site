@@ -23,4 +23,5 @@ Planned features:
   - Sort a set of terms into two categories
   - Select a part of a larger text which is most applicable to the current question/term
 - Locking/unlocking content for specific users based on criteria like completion of other content, time (e.g. unlock for everyone at a certain point in the course)
+- Some kind of definition of the sequence/flow/tree of pages that a student is meant to follow
 - "Admin" interface for examining, changing, downloading database contents (logs, account roles)
