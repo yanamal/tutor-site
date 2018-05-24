@@ -1,0 +1,14 @@
+<!-- This is a "wrapper" template that sets up all the styling and behavior.
+If your content page inherits from it, you can use various classes in HTML to define pop=ups, collapsible tips, etc. -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/resources/common-styles.css">
+    <!-- extending documents should use the title block to insert a page title-->
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+      <!-- the actual content will be inserted in the content block-->
+      {% block content %}{% endblock %}
+  </body>
+</html>

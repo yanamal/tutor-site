@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>This is a templated page</title>
-  </head>
-  <body>
-    <h1>Hello, <em>{{ name }}</em>!</h1>
-    This page gets rendered by the server, so it knows that you are {{ name }}!
+{% extends "generic-header.html" %}
+{% block title %}This is an example page{% endblock %}
+{% block content %}
+  <h1>Hello, <em>{{ name }}</em>!</h1>
+  This page gets rendered by the server, so it knows that you are {{ name }}!
 
-    {% if profile and profile.is_teacher() %}
-      <br>This should only be visible if you are a teacher!
-    {% endif %}
-  </body>
-</html>
+  {% if profile and profile.is_teacher() %}
+  <div class="teachnote">
+    This section should only be visible if you are a teacher!
+  </div>
+  {% endif %}
+{% endblock %}

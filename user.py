@@ -5,11 +5,11 @@ from flask import Flask
 
 app = Flask(__name__)
 
-# class represeting a timestamp/action pair for logging navigation.
-# Action is a string (for now): most commonly the path that the user navigated to.
+# TimestampedAction represets a timestamp/action/url triplet, used for for logging a user's interactions with the site.
 class TimestampedAction(ndb.Model):
     timestamp = ndb.DateTimeProperty(auto_now_add=True) # timestamp. auto_now_add makes it so that the timestamp is automatically added when an instance is created.
-    action = ndb.StringProperty() # the action taken
+    url = ndb.StringProperty() # the path/url associated with the action
+    action = ndb.StringProperty() # the action taken (load, exit, focus, unfocus, click on button, ...)
 
 # class representing User Profile data that's specific to this application:
 class UserProfile(ndb.Model):
@@ -29,8 +29,8 @@ class UserProfile(ndb.Model):
             profile.put()
         return profile
 
-    def log_action(self, action):
-        self.action_log.append(TimestampedAction(action=action))
+    def log_action(self, url, action):
+        self.action_log.append(TimestampedAction(url=url, action=action))
         self.put()
 
     def is_teacher(self):

@@ -31,4 +31,4 @@ def log_request():
     # get the user's profile entry from the database (or create one if this user is new to our database)
     profile = UserProfile.get_by_user(users.get_current_user())
     # log the visited URL (request.full_path) in the user's profile.
-    profile.log_action(request.full_path)
+    profile.log_action(url=request.full_path, action="pageload")

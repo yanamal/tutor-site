@@ -4,3 +4,11 @@ table.rubric, table.rubric td, table.rubric th {
   border: 1px solid black;
   border-collapse: collapse;
 }
+
+.teachnote {
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #ffef96;
+  background-color: #fefbd8;
+  padding: 10px;
+}
