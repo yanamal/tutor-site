@@ -35,6 +35,20 @@ If your content page inherits from it, you can use various classes in HTML to de
             }
           }
         });
+        // Dialog objects - pop-up dialogs (handle opening them in your own HTML)
+        $( ".dialog" ).dialog({
+          autoOpen: false,
+          open: function( event, ui ) {
+            $.post("/logevent", { "path": window.location.pathname,
+                                  "action": "open dialog",
+                                  "data": event.target.id})
+          },
+          close: function( event, ui ) {
+            $.post("/logevent", { "path": window.location.pathname,
+                                  "action": "close dialog",
+                                  "data": event.target.id})
+          }
+        });
       } );
     </script>
     <!-- extending documents should use the title block to insert a page title-->

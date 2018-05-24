@@ -18,11 +18,21 @@
     But note that in each accordion, at most one panel is open at a time.-->
   </span>
 
-  <!-- Note that the teacher-note styling and the teacher-only functionality are separate:
+  <!-- Example of "teacher-facing" notes that are only visible to non-student accounts. (new accounts are student by default)
+  Note that the teacher-note styling and the teacher-only functionality are separate:
   class="teachnote" changes the style of the div; the "if profile" stuff hides it if the current user is a student.-->
   {% if profile and profile.is_teacher() %}
   <div class="teachnote">
     This section should only be visible if you are a teacher!
   </div>
   {% endif %}
+
+ <!-- Example of a pop-up hint dialog. Again, this is just a jquery dialog widget with sensible defaults and added logging.
+  For flexibility and simplicity, you have to manually define in HTML how and when you want to trigger the dialog opening
+  (example below does this with a simple a button). -->
+  <div class="dialog" id="testdialog" title="dialog title">
+    This is a sample pop-up dialog hint!
+  </div>
+  <button onclick="$( '#testdialog' ).dialog( 'open' );">Click me for a tip!</button>
+
 {% endblock %}
