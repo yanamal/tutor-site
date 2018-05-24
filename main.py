@@ -20,7 +20,7 @@ def hello():
     return render_template('hello.html', profile=UserProfile.get_by_user(users.get_current_user()))
 
 # render a site-specific page from template
-@app.route('/site-specific/<page>')
+@app.route('/s/<page>')
 def renderPage(page):
     return render_template('site-specific/'+page, profile=UserProfile.get_by_user(users.get_current_user()))
 
