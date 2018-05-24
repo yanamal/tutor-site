@@ -3,7 +3,22 @@ If your content page inherits from it, you can use various classes in HTML to de
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- jquery set-up -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- tutor-site specific styles -->
     <link rel="stylesheet" href="/resources/common-styles.css">
+
+    <!-- tutor-site specific functionality/handlers -->
+    <script>
+      $( function() {
+        $( ".accordion" ).accordion({
+          collapsible: true,
+          active: false
+        });
+      } );
+    </script>
     <!-- extending documents should use the title block to insert a page title-->
     <title>{% block title %}{% endblock %}</title>
   </head>

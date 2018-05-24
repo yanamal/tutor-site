@@ -17,7 +17,7 @@ if not os.getenv('SERVER_SOFTWARE').startswith('Google App Engine/'):
 
 @app.route('/')
 def hello():
-    return render_template('hello.html', name = users.get_current_user().nickname(), profile=UserProfile.get_by_user(users.get_current_user()))
+    return render_template('hello.html', profile=UserProfile.get_by_user(users.get_current_user()))
 
 # render a site-specific page from template
 @app.route('/site-specific/<page>')

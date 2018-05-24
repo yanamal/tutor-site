@@ -1,9 +1,21 @@
 {% extends "generic-header.html" %}
 {% block title %}This is an example page{% endblock %}
 {% block content %}
-  <h1>Hello, <em>{{ name }}</em>!</h1>
-  This page gets rendered by the server, so it knows that you are {{ name }}!
 
+  <h1>Hello!</h1>
+  <p>This is an example page which shows off most of the implemented functionality.</p>
+
+  <!-- The accordion class is actually just set up to be a jquery accordion widget (https://jqueryui.com/accordion/)
+  with some useful defaults. (TODO: and also logging when it's interacted with) -->
+  <span class="accordion">
+    <span>Expandable info!</span>
+    <div>
+      This is the content of the expandable accordion
+    </div>
+  </span>
+
+  <!-- Note that the teacher-note styling and the teacher-only functionality are separate:
+  class="teachnote" changes the style of the div; the "if profile" stuff hides it if the current user is a student.-->
   {% if profile and profile.is_teacher() %}
   <div class="teachnote">
     This section should only be visible if you are a teacher!
