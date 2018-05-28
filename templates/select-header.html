@@ -1,0 +1,71 @@
+{% extends "generic-header.html" %}
+{% block additionalHeaders %}
+<script>
+  function checkSelection(id){
+    let correctNode = document.getElementById(id);
+    let correctLength = $.trim(correctNode.innerText).length;
+
+    // correctness fraction - 0 is no overlap, 1 is exact correct selection, in between is extra text selected and/or some of the correct text is not selected.
+    let correctnessFraction = 0;
+    if( getSelection().containsNode(correctNode, true) ) {
+      // some overlap between selection and correct node:
+      // at least part of the correct selection was selected
+
+      let unselectedStart = 0; // portion of the start of the correct text that wasn't selected
+      let unselectedEnd = 0; // portion of the end of the correct text that wasn't selected
+
+      if( correctNode.contains(getSelection().getRangeAt(0).startContainer) ) {
+        // selection start overlaps correct text; in other words, the start of the correct text is not selected
+        console.log("start  overlaps");
+
+        // calculate length of correct text (at start) NOT overlapping selection:
+        let unselectedStartNodes = document.createRange();
+        unselectedStartNodes.setStart( correctNode, 0 );
+        unselectedStartNodes.setEnd( getSelection().getRangeAt(0).startContainer, getSelection().getRangeAt(0).startOffset);
+
+        console.log(unselectedStartNodes.toString());
+
+        unselectedStart = $.trim(unselectedStartNodes.toString()).length;
+        // Note: because I'm trimming the whitespace, I think whitespace "adjacent" to the selection doesn't count toward totalLength. Oh well.
+      }
+
+      if( correctNode.contains(getSelection().getRangeAt(0).endContainer) ) {
+        // selection end overlaps correct text; in other words, the end of the correct text is not selected
+        console.log("end overlaps");
+
+        // calculate length of correct text (at end) NOT overlapping selection:
+        let unselectedEndNodes = document.createRange();
+        unselectedEndNodes.setStart( getSelection().getRangeAt(0).endContainer, getSelection().getRangeAt(0).endOffset);
+        unselectedEndNodes.setEnd( correctNode, correctNode.childNodes.length );
+        console.log(unselectedEndNodes.toString());
+
+        unselectedEnd = $.trim(unselectedEndNodes.toString()).length;
+        // Note: because I'm trimming the whitespace, I think whitespace "adjacent" to the selection doesn't count toward totalLength. Oh well.
+      }
+
+      // calculate total length of "relevant" text (selected OR part of the correct text):
+      let totalLength = getSelection().toString().length + unselectedStart + unselectedEnd;
+      //calculate total length of "valid" text (selected AND part of the correct text):
+      let validSelectionLength = correctLength - unselectedStart - unselectedEnd;
+
+      correctnessFraction = validSelectionLength/totalLength;
+    }
+    document.getElementById('result_'+id).textContent = correctnessFraction;
+  }
+  $( function() {
+    // wrap selectgame element(s) in a table:
+    $(".selectgame").wrapInner('<table class="gametable"><tr class="trow"><td class="textcell"></td></tr></table>')
+                    // process each selectgame element and add appropriate html:
+                    .each(function(){
+      // add a table cell to contain the buttons:
+      $(".textcell", this).after('<td class="buttoncell"></td>');
+      buttoncell = $(".buttoncell", this);
+      // For each selectable element inside the current selectgame, add a button:
+      $(".selectable", this).each(function(){
+        console.log(this)
+        buttoncell.append('<button onClick="checkSelection(\''+this.id+'\')">'+this.id+'</button><span id="result_'+this.id+'"></span><br/>')
+      })
+    });
+  });
+</script>
+{% endblock %}

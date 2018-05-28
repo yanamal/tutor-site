@@ -21,6 +21,10 @@ if not os.getenv('SERVER_SOFTWARE').startswith('Google App Engine/'):
 def hello():
     return render_template('hello.html', profile=UserProfile.get_by_user(users.get_current_user()))
 
+@app.route('/select/<gamename>')
+def select(gamename):
+    return render_template('/selectGames/'+gamename+'.html', profile=UserProfile.get_by_user(users.get_current_user()))
+
 # render a site-specific page from template
 @app.route('/s/<page>')
 def renderPage(page):
